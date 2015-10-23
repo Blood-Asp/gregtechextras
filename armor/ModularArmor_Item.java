@@ -256,10 +256,10 @@ public class ModularArmor_Item extends ItemArmor implements ISpecialArmor, IGogg
 				}
 					aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+(typeMod), aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);
 			}
-			if(data.helmet.openGui){data.helmet.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+400, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
-			if(data.chestplate.openGui){data.chestplate.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+300, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
-			if(data.leggings.openGui){data.leggings.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+200, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
-			if(data.boots.openGui){data.boots.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+100, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
+			if(data.helmet!=null&&data.helmet.openGui){data.helmet.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+400, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
+			if(data.chestplate!=null&&data.chestplate.openGui){data.chestplate.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+300, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
+			if(data.leggings!=null&&data.leggings.openGui){data.leggings.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+200, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
+			if(data.boots!=null&&data.boots.openGui){data.boots.openGui=false;aPlayer.openGui(GTExtras.INSTANCE, openGuiNr+100, aWorld, (int) aPlayer.posX, (int) aPlayer.posY, (int) aPlayer.posZ);}
 			// Night Vision
 			if (timer >= 200) {
 				timer = 0;
@@ -391,6 +391,10 @@ public class ModularArmor_Item extends ItemArmor implements ISpecialArmor, IGogg
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
 		String armor="gtextras:textures/item/armorhelmet.png";
 		String tier="";
+		try{
+		if (data == null) {
+			data = fillArmorData((EntityPlayer) entity, stack);
+		}
 		if(this.data.armorTier==0){
 			tier="basic";
 		}else if(this.data.armorTier==1){
@@ -402,7 +406,7 @@ public class ModularArmor_Item extends ItemArmor implements ISpecialArmor, IGogg
 			armor = "gtextras:textures/models/armor/"+tier+"_helmet_chest.png";
 		}else{
 			armor = "gtextras:textures/models/armor/"+tier+"_leggings_boots.png";
-		}
+		}}catch(Exception e){System.err.println(e);}
 		return armor;
 	}
 
